@@ -1,9 +1,11 @@
 .nav{
     grid-area: n;
-    background-color: lightyellow;
+    background-color: #1c1c1B;
+    width: 100px;
+    text-align: center;
 
 }
 
 .icon{
-    color:white;
+    color:#d6f60f;
 }
