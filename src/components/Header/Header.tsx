@@ -4,7 +4,7 @@ import s from './Header.module.css';
 const Header =()=>{
     return(
         <header className={s.header}>
-            <img src='https://nettox.net/upload/CAllcorp3/d57/kauxq58ufbclwqoodgiheft3o6co147w.svg' alt=""/>
+            <img src='https://nettox.net/upload/CAllcorp3/312/hf0t8t1e29hr26hkqxmscb57emme8k46.svg' alt=""/>
         </header>
     )
 }
