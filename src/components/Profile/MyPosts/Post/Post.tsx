@@ -1,7 +1,9 @@
 import React from "react";
 import s from './Post.module.css'
+import {PostsType} from "../../../../redux/State";
 
-const Post = (props:any) => {
+
+const Post = (props:PostsType) => {
     return (
         <div>
             <div className={s.item}>
