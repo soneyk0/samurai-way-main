@@ -1,5 +1,3 @@
-
-
 export type PostsType = {
     id: number,
     message: string,
@@ -31,18 +29,29 @@ export type StateType = {
     dialogPage: DialogPageType
 }
 
-export type StoreType={
-    _state:StateType,
-    getState:()=>StateType,
-    _callSubscriber:()=>void
-    addPost:()=>void
-    updateNewPostText:(newText: string)=>void
-    subscribe:(callback:()=>void)=>void
-
+export type StoreType = {
+    _state: StateType,
+    _callSubscriber: () => void,
+    getState: () => StateType,
+    // addPost: () => void,
+    // updateNewPostText: (newText: string) => void,
+    subscribe: (callback: () => void) => void,
+    dispatch: (action:ActionsTypes)=>void
 }
 
-let store:StoreType={
-    _state:  {
+export type ActionsTypes   = AddPostActionType | UpdateNewPostTextActionType;
+
+type AddPostActionType={
+    type:'ADD-POST'
+}
+
+type UpdateNewPostTextActionType={
+    type:'UPDATE-NEW-POST-TEXT'
+    newText:string
+}
+
+let store: StoreType = {
+    _state: {
         profilePage: {
             posts: [
                 {id: 1, message: 'hi how are you', likesCount: 0},
@@ -70,28 +79,37 @@ let store:StoreType={
         }
 
     },
-    getState(){
+    getState() {
         return this._state
     },
-    _callSubscriber(){
+    _callSubscriber() {
         console.log('state changed')
     },
-    addPost  ()  {
-        const newPost: PostsType = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            likesCount: 10
+    // addPost() {
+    //
+    // },
+    // updateNewPostText(newText: string) {
+    //
+    // },
+    subscribe(callback) {
+        this._callSubscriber = callback;
+
+    },
+    dispatch(action) { // {type: 'название действия'}
+        if (action.type === 'ADD-POST') {
+            const newPost: PostsType = {
+                id: 5,
+                message: this._state.profilePage.newPostText,
+                likesCount: 10
+            }
+            this._state.profilePage.posts.push(newPost);
+            this._state.profilePage.newPostText = ''
+            this._callSubscriber();
         }
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = ''
-        this._callSubscriber();
-    },
-    updateNewPostText  (newText: string)  {
-        this._state.profilePage.newPostText = newText;
-        this._callSubscriber();
-    },
-    subscribe(callback){
-        this._callSubscriber=callback;
+        else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newText;
+            this._callSubscriber();
+        }
 
     }
 
