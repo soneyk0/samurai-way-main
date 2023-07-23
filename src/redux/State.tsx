@@ -112,7 +112,19 @@ let store: StoreType = {
         }
 
     }
+}
 
+export const addPostActionCreator =(): AddPostActionType=>{
+    return {
+        type:'ADD-POST'
+    } as const
+}
+
+export const onPostChangeActionCreator =(text: string) : UpdateNewPostTextActionType =>{
+    return {
+        type:'UPDATE-NEW-POST-TEXT',
+        newText:text
+    } as const
 }
 
 
