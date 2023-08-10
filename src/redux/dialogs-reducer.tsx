@@ -1,17 +1,56 @@
-import {ActionsTypes, DialogPageType, PostsType, SendMessageActionType, UpdateNewMessageTextActionType} from "./State";
+import {ActionsTypes, DialogPageType, SendMessageActionType, UpdateNewMessageTextActionType} from "./store";
 
-const dialogsReducer = (state: DialogPageType, action: ActionsTypes): DialogPageType => {
+export type DialogsType = {
+    id: number,
+    name: string
+}
+
+export type PostsMessages = {
+    id: number,
+    message: string
+}
+
+
+let initialState = {
+    dialogs: [
+        {id: 1, name: 'Yana'},
+        {id: 2, name: 'Dimych'},
+        {id: 3, name: 'Alina'},
+        {id: 4, name: 'Anna'},
+        {id: 5, name: 'Nikita'},
+        {id: 6, name: 'Sveta'}
+    ] as Array<DialogsType>,
+    messages: [
+        {id: 1, message: 'Hi'},
+        {id: 2, message: 'How is your it-kamasutra?'},
+        {id: 3, message: 'Yo'},
+        {id: 4, message: 'Yo'},
+        {id: 5, message: 'Yo'},
+        {id: 6, message: 'Yo'}
+    ] as Array<PostsMessages>,
+    newMessageText: ''
+
+}
+
+export type InitialStateType = typeof initialState
+
+
+const dialogsReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
 
     switch (action.type) {
-        case 'UPDATE-NEW-MESSAGE-TEXT':
-            state.newMessageText = action.body;
-            return state;
+        case 'UPDATE-NEW-MESSAGE-TEXT': {
+            let messageCopy = {...state}
+            messageCopy.newMessageText = action.body;
+            return messageCopy;
+        }
 
-        case 'SEND-MESSAGE':
-            let body = state.newMessageText;
-            state.newMessageText = ''
-            state.messages.push({id: 7, message: body})
-            return state;
+        case 'SEND-MESSAGE': {
+            let messageCopy = {...state}
+            let body = messageCopy.newMessageText;
+            messageCopy.newMessageText = ''
+            messageCopy.messages.push({id: 7, message: body})
+            return messageCopy;
+        }
 
         default:
             return state;

@@ -1,6 +1,6 @@
 import React from "react";
 import s from './Post.module.css'
-import {PostsType} from "../../../../redux/State";
+import {PostsType} from "../../../../redux/store";
 
 
 const Post = (props:PostsType) => {
