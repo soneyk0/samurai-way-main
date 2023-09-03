@@ -1,8 +1,3 @@
-import {
-    ActionsTypes,
-    AddPostActionType,
-    UpdateNewPostTextActionType
-} from "./store";
 
 export type UsersType = {
     id: number,
