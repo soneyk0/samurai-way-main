@@ -6,9 +6,9 @@ import {
 
 export type UsersType = {
     id: number,
-    photoUrl:string,
+    photos: { small: null | string, large: null | string },
     followed: boolean,
-    fullName: string,
+    name: string,
     status: string,
     location: { city: string, country: string }
 }
