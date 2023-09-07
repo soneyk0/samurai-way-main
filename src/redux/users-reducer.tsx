@@ -1,4 +1,3 @@
-
 export type UsersType = {
     id: number,
     photos: { small: null | string, large: null | string },
@@ -9,40 +8,20 @@ export type UsersType = {
 }
 
 let initialState = {
-    users: [
-        // {
-        //     id: 1,
-        //     photoUrl: 'https://img01.rl0.ru/afisha/e375x210p0x32f5760x3291q85i/s3.afisha.ru/mediastorage/87/27/5fd2432fb42640fd99f0e9fb2787.jpg',
-        //     followed: false,
-        //     fullName: 'Dmitry',
-        //     status: 'Im a boss',
-        //     location: {city: 'Minsk', country: 'Belarus'}
-        // },
-        // {
-        //     id: 2,
-        //     photoUrl: 'https://img01.rl0.ru/afisha/e375x210p0x32f5760x3291q85i/s3.afisha.ru/mediastorage/87/27/5fd2432fb42640fd99f0e9fb2787.jpg',
-        //     followed: true,
-        //     fullName: 'Alina',
-        //     status: 'Im a boss too',
-        //     location: {city: 'Warsaw', country: 'Poland'}
-        // },
-        // {
-        //     id: 3,
-        //     photoUrl: 'https://img01.rl0.ru/afisha/e375x210p0x32f5760x3291q85i/s3.afisha.ru/mediastorage/87/27/5fd2432fb42640fd99f0e9fb2787.jpg',
-        //     followed: false,
-        //     fullName: 'Andrew',
-        //     status: 'I love beer',
-        //     location: {city: 'Berlin', country: 'Germany'}
-        // },
-    ] as Array<UsersType>
+    users: [] as Array<UsersType>,
+    pageSize: 10,
+    totalUsersCount: 54,
+    currentPage: 1
 }
 
 export type InitialStateType = typeof initialState
 export type followACType = ReturnType<typeof followAC>
 export type unfollowACType = ReturnType<typeof unfollowAC>
 export type setUsersACType = ReturnType<typeof setUsersAC>
+export type setCurrentPageType = ReturnType<typeof setCurrentPageAC>
+export type setTotalUsersCountType = ReturnType<typeof setTotalUsersCountAC>
 
-type ActionType = followACType | unfollowACType | setUsersACType
+type ActionType = followACType | unfollowACType | setUsersACType | setCurrentPageType | setTotalUsersCountType
 
 const usersReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
@@ -63,7 +42,12 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionType
             }
 
         case'SET_USERS':
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: action.users}
+
+        case'SET_CURRENT_PAGE':
+            return {...state, currentPage: action.currentPage}
+        case'SET_TOTAL_USERS_COUNT':
+            return {...state, totalUsersCount: action.count}
 
         default:
             return state;
@@ -88,6 +72,19 @@ export const setUsersAC = (users: Array<UsersType>) => {
     return {
         type: 'SET_USERS',
         users
+    } as const
+}
+
+export const setCurrentPageAC = (currentPage: number) => {
+    return {
+        type: 'SET_CURRENT_PAGE',
+        currentPage
+    } as const
+}
+export const setTotalUsersCountAC = (totalUsersCount: number) => {
+    return {
+        type: 'SET_TOTAL_USERS_COUNT',
+        count: totalUsersCount
     } as const
 }
 
