@@ -1,6 +1,10 @@
 import profileReducer from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 
+export type ProfileType = {
+   photos: { small: string , large: string}
+}
+
 export type PostsType = {
     id: number,
     message: string,
@@ -19,6 +23,7 @@ export type PostsMessages = {
 export type ProfilePageType = {
     posts: Array<PostsType>
     newPostText: string
+    profile: ProfileType
 
 
 }
@@ -37,8 +42,6 @@ export type StoreType = {
     _state: StateType,
     _callSubscriber: () => void,
     getState: () => StateType,
-    // addPost: () => void,
-    // updateNewPostText: (newText: string) => void,
     subscribe: (callback: () => void) => void,
     dispatch: (action: ActionsTypes) => void
 }
@@ -47,7 +50,8 @@ export type ActionsTypes =
     AddPostActionType
     | UpdateNewPostTextActionType
     | UpdateNewMessageTextActionType
-    | SendMessageActionType;
+    | SendMessageActionType
+    | setUserProfileType;
 
 export type AddPostActionType = {
     type: 'ADD-POST'
@@ -66,6 +70,10 @@ export type UpdateNewMessageTextActionType = {
 export type SendMessageActionType = {
     type: 'SEND-MESSAGE'
 }
+export type setUserProfileType = {
+    type: 'SET_USER_PROFILE',
+    profile: ProfileType
+}
 
 let store: StoreType = {
     _state: {
@@ -75,6 +83,9 @@ let store: StoreType = {
                 {id: 2, message: 'Its my first post', likesCount: 23},
             ],
             newPostText: '',
+            profile: {
+                photos: { small:'', large:''}
+            },
         },
         dialogPage: {
             dialogs: [
@@ -123,10 +134,6 @@ let store: StoreType = {
 
     }
 }
-
-
-
-
 
 
 // let state: StateType = {

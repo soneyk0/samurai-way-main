@@ -1,8 +1,13 @@
+
 import {
     ActionsTypes,
     AddPostActionType,
+    ProfilePageType,
+    ProfileType,
+    setUserProfileType,
     UpdateNewPostTextActionType
 } from "./store";
+import {log} from "util";
 
 export type PostsType = {
     id: number,
@@ -16,6 +21,9 @@ let initialState = {
         {id: 2, message: 'Its my first post', likesCount: 23},
     ] as Array<PostsType>,
     newPostText: '',
+    profile: {
+        photos: { small: '', large: '' }
+    }
 }
 
 export type InitialStateType = typeof initialState
@@ -41,6 +49,14 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionsT
                 newPostText: action.newText
             }
         }
+
+        case 'SET_USER_PROFILE': {
+            console.log(action.profile)
+            return {
+                ...state,
+                profile:action.profile
+            }
+        }
         default:
             return state;
     }
@@ -57,6 +73,13 @@ export const onPostChangeActionCreator = (text: string): UpdateNewPostTextAction
     return {
         type: 'UPDATE-NEW-POST-TEXT',
         newText: text
+    } as const
+}
+
+export const setUserProfileAC = (profile: ProfileType): setUserProfileType => {
+    return {
+        type: 'SET_USER_PROFILE',
+        profile
     } as const
 }
 

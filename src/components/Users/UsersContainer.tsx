@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../redux/redux-store";
-import {Dispatch} from "redux";
 import {
     followAC,
     setCurrentPageAC,
@@ -12,7 +11,6 @@ import {
 } from "../../redux/users-reducer";
 import axios from "axios";
 import Users from "./Users";
-import preloader from './../../assets/images/preloader.png';
 import Preloader from "../common/Preloader/Preloader";
 
 export type UsersContainerType = {
