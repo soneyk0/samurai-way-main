@@ -7,3 +7,25 @@
     width: 200px;
     height: 60px;
 }
+
+.loginBlock {
+    margin-top: 16px;
+    margin-right: 16px;
+    float: right;
+}
+
+.loginBlock a {
+    text-decoration: none;
+    color: #d6f60f;
+}
+
+.loginBlock a.activeLink {
+    color: black;
+    border:#d6f60f;
+    background-color: #d6f60f;
+    border-radius: 2px;
+    padding-bottom: 3px;
+    padding-right: 3px;
+    padding-left: 3px;
+
+}

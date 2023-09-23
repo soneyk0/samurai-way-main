@@ -2,7 +2,7 @@ import profileReducer from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 
 export type ProfileType = {
-   photos: { small: string , large: string}
+    photos: { small: string, large: string }
 }
 
 export type PostsType = {
@@ -84,7 +84,7 @@ let store: StoreType = {
             ],
             newPostText: '',
             profile: {
-                photos: { small:'', large:''}
+                photos: {small: '', large: ''}
             },
         },
         dialogPage: {

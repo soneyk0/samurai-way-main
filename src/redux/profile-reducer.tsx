@@ -22,7 +22,7 @@ let initialState = {
     ] as Array<PostsType>,
     newPostText: '',
     profile: {
-        photos: { small: '', large: '' }
+        photos: { small: '', large: '' },
     }
 }
 

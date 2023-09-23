@@ -1,13 +1,11 @@
 import React from "react";
 import Profile from "./Profile";
 import axios from "axios";
-import {UsersType} from "../../redux/users-reducer";
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../redux/redux-store";
 import {setUserProfileAC} from "../../redux/profile-reducer";
 import {ProfileType} from "../../redux/store";
 import {useLocation, useParams,} from "react-router-dom";
-import PropTypes from "prop-types";
 
 type ProfileContainerType = {
     setUserProfile: (profile: ProfileType) => void,
