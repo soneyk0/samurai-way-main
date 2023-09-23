@@ -20,7 +20,7 @@ export type UsersContainerType = {
     setUsers: (users: Array<UsersType>) => void,
     setPage: (pageNumber: number) => void,
     setTotalUsersCount: (totalUsersCount: number) => void,
-    toggleIsFetching:(isFetching: boolean)=>void,
+    toggleIsFetching: (isFetching: boolean) => void,
     pageSize: number,
     totalUsersCount: number,
     currentPage: number,
@@ -31,7 +31,12 @@ class UsersContainer extends React.Component <UsersContainerType> {
 
     componentDidMount() {
         this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+            withCredentials: true,
+            headers: {
+                'API-KEY': '00f29180-c35c-415a-9fc9-4d442e2940fa'
+            }
+        })
             .then(response => {
                 this.props.toggleIsFetching(false)
                 this.props.setUsers(response.data.items)
@@ -42,7 +47,12 @@ class UsersContainer extends React.Component <UsersContainerType> {
     onPageChanged = (page: number) => {
         this.props.setPage(page)
         this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`, {
+            withCredentials: true,
+            headers: {
+                'API-KEY': '00f29180-c35c-415a-9fc9-4d442e2940fa'
+            }
+        })
             .then(response => {
                 this.props.toggleIsFetching(false)
                 this.props.setUsers(response.data.items)
@@ -105,5 +115,5 @@ export default connect(mapStateToProps, {
     setUsers: setUsersAC,
     setPage: setCurrentPageAC,
     setTotalUsersCount: setTotalUsersCountAC,
-    toggleIsFetching:toggleIsFetchingAC
+    toggleIsFetching: toggleIsFetchingAC
 })(UsersContainer)

@@ -12,7 +12,7 @@ let initialState = {
     pageSize: 10,
     totalUsersCount: 54,
     currentPage: 1,
-    isFetching:false
+    isFetching: false
 }
 
 export type InitialStateType = typeof initialState
@@ -23,7 +23,13 @@ export type setCurrentPageType = ReturnType<typeof setCurrentPageAC>
 export type setTotalUsersCountType = ReturnType<typeof setTotalUsersCountAC>
 export type toggleIsFetchingType = ReturnType<typeof toggleIsFetchingAC>
 
-type ActionType = followACType | unfollowACType | setUsersACType | setCurrentPageType | setTotalUsersCountType |toggleIsFetchingType
+type ActionType =
+    followACType
+    | unfollowACType
+    | setUsersACType
+    | setCurrentPageType
+    | setTotalUsersCountType
+    | toggleIsFetchingType
 
 const usersReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
