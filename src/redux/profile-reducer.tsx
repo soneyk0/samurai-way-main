@@ -1,13 +1,13 @@
-
 import {
     ActionsTypes,
     AddPostActionType,
-    ProfilePageType,
     ProfileType,
     setUserProfileType,
     UpdateNewPostTextActionType
 } from "./store";
-import {log} from "util";
+import {Dispatch} from "redux";
+import {usersAPI} from "../api/api";
+
 
 export type PostsType = {
     id: number,
@@ -22,7 +22,7 @@ let initialState = {
     ] as Array<PostsType>,
     newPostText: '',
     profile: {
-        photos: { small: '', large: '' },
+        photos: {small: '', large: ''},
     }
 }
 
@@ -54,7 +54,7 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionsT
             console.log(action.profile)
             return {
                 ...state,
-                profile:action.profile
+                profile: action.profile
             }
         }
         default:
@@ -82,5 +82,12 @@ export const setUserProfileAC = (profile: ProfileType): setUserProfileType => {
         profile
     } as const
 }
+
+export const getUserProfileTC = (userId:string) => (dispatch: Dispatch) => {
+    usersAPI.getProfile(userId).then(response => {
+        dispatch(setUserProfileAC(response.data));
+    });
+}
+
 
 export default profileReducer;
