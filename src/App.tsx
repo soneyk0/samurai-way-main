@@ -10,15 +10,8 @@ import UsersContainer from "./components/Users/UsersContainer";
 import {setUserProfileAC} from "./redux/profile-reducer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import {initialState, setAuthUserDataAC} from "./redux/auth-reducer";
+import Login from "./components/Login/Login";
 
-// export type AppPropsType = {
-//     store: typeof store
-//     // dispatch: (action: ActionsTypes) => void
-//     // addPost:()=>void
-//     // updateNewPostText:(newText: string)=>void
-//
-// }
 
 const App = () => {
     return (
@@ -33,8 +26,8 @@ const App = () => {
                 <Route path='/news' render={() => <News/>}/>
                 <Route path='/music' render={() => <Music/>}/>
                 <Route path='/settings' render={() => <Settings/>}/>
-                <Route path='/users' render={() => <UsersContainer/>}
-                />
+                <Route path='/users' render={() => <UsersContainer/>}/>
+                <Route path='/login' render={() => <Login/>}/>
 
             </div>
         </div>
