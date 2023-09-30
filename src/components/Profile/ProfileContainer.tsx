@@ -6,7 +6,7 @@ import {AppRootStateType} from "../../redux/redux-store";
 import {setUserProfileAC} from "../../redux/profile-reducer";
 import {ProfileType} from "../../redux/store";
 import {useLocation, useParams,} from "react-router-dom";
-import {getProfile} from "../../api/api";
+import {usersAPI} from "../../api/api";
 
 type ProfileContainerType = {
     setUserProfile: (profile: ProfileType) => void,
@@ -38,7 +38,7 @@ class ProfileContainer extends React.Component<ProfileContainerType> {
         if (!userId) {
             userId = '30030';
         }
-        getProfile(userId).then(data => {
+        usersAPI.getProfile(userId).then(data => {
                 this.props.setUserProfile(data);
                 console.log(data)
             });
