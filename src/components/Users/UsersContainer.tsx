@@ -11,6 +11,8 @@ import {
 } from "../../redux/users-reducer";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
+import {compose} from "redux";
+import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 export type UsersContainerType = {
     users: Array<UsersType>,
@@ -24,8 +26,8 @@ export type UsersContainerType = {
     totalUsersCount: number,
     currentPage: number,
     isFetching: boolean
-    isFollowingInProgress:Array<number>
-    getUsersThunk:(currentPage:number,pageSize:number)=>void
+    isFollowingInProgress: Array<number>
+    getUsersThunk: (currentPage: number, pageSize: number) => void
 }
 
 class UsersContainer extends React.Component <UsersContainerType> {
@@ -68,34 +70,14 @@ let mapStateToProps = (state: AppRootStateType) => {
         isFollowingInProgress: state.usersPage.isFollowingInProgress
     }
 }
-// let mapDispatchToProps = (dispatch: Dispatch) => {
-//     return {
-//         follow: (userId: number) => {
-//             dispatch(followAC(userId))
-//         },
-//         unfollow: (userId: number) => {
-//             dispatch(unfollowAC(userId))
-//         },
-//         setUsers: (users: Array<UsersType>) => {
-//             dispatch(setUsersAC(users))
-//         },
-//         setPage: (pageNumber: number) => {
-//             dispatch(setCurrentPageAC(pageNumber))
-//         },
-//         setTotalUsersCount: (totalUsersCount: number) => {
-//             dispatch(setTotalUsersCountAC(totalUsersCount))
-//         },
-//         toggleIsFetching:(isFetching: boolean)=>{
-//             dispatch(toggleIsFetchingAC(isFetching))
-//         }
-//     }
-// }
-export default connect(mapStateToProps, {
-    follow: followTC,
-    unfollow: unfollowTC,
-    setUsers: setUsersAC,
-    setPage: setCurrentPageAC,
-    setTotalUsersCount: setTotalUsersCountAC,
-    toggleIsFetching: toggleIsFetchingAC,
-    getUsersThunk:getUsersTC
-})(UsersContainer)
+
+export default compose<React.ComponentType>(
+    WithAuthRedirect, connect(mapStateToProps, {
+        follow: followTC,
+        unfollow: unfollowTC,
+        setUsers: setUsersAC,
+        setPage: setCurrentPageAC,
+        setTotalUsersCount: setTotalUsersCountAC,
+        toggleIsFetching: toggleIsFetchingAC,
+        getUsersThunk: getUsersTC
+    }))(UsersContainer)
