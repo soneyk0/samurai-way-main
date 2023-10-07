@@ -23,6 +23,7 @@ let initialState = {
     newPostText: '',
     profile: {
         photos: {small: '', large: ''},
+        status:''
     }
 }
 

@@ -3,6 +3,7 @@ import dialogsReducer from "./dialogs-reducer";
 
 export type ProfileType = {
     photos: { small: string, large: string }
+    status:string
 }
 
 export type PostsType = {
@@ -84,7 +85,8 @@ let store: StoreType = {
             ],
             newPostText: '',
             profile: {
-                photos: {small: '', large: ''}
+                photos: {small: '', large: ''},
+                status:''
             },
         },
         dialogPage: {
@@ -115,12 +117,6 @@ let store: StoreType = {
     _callSubscriber() {
         console.log('state changed')
     },
-    // addPost() {
-    //
-    // },
-    // updateNewPostText(newText: string) {
-    //
-    // },
     subscribe(callback) {
         this._callSubscriber = callback;
 
