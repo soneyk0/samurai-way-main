@@ -1,12 +1,12 @@
 import {
     ActionsTypes,
     AddPostActionType,
-    ProfileType,
+    ProfileType, setStatusType,
     setUserProfileType,
     UpdateNewPostTextActionType
 } from "./store";
 import {Dispatch} from "redux";
-import {usersAPI} from "../api/api";
+import {profileAPI, usersAPI} from "../api/api";
 
 
 export type PostsType = {
@@ -23,8 +23,8 @@ let initialState = {
     newPostText: '',
     profile: {
         photos: {small: '', large: ''},
-        status:''
-    }
+    },
+    status: ''
 }
 
 export type InitialStateType = typeof initialState
@@ -58,6 +58,11 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionsT
                 profile: action.profile
             }
         }
+        case 'SET_STATUS': {
+            return {
+                ...state, status: action.status
+            }
+        }
         default:
             return state;
     }
@@ -84,10 +89,32 @@ export const setUserProfileAC = (profile: ProfileType): setUserProfileType => {
     } as const
 }
 
-export const getUserProfileTC = (userId:string) => (dispatch: Dispatch) => {
+export const setStatusAC = (status: string): setStatusType => {
+    return {
+        type: 'SET_STATUS',
+        status
+    } as const
+}
+
+export const getUserProfileTC = (userId: string) => (dispatch: Dispatch) => {
     usersAPI.getProfile(userId).then(response => {
         dispatch(setUserProfileAC(response.data));
     });
+}
+
+export const getStatusTC = (userId: string) => (dispatch: Dispatch) => {
+    profileAPI.getStatus(userId).then(response => {
+        dispatch(setStatusAC(response.data));
+    });
+}
+
+export const updateStatusTC = (status: string) => (dispatch: Dispatch) => {
+    profileAPI.updateStatus(status)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(setStatusAC(status));
+            }
+        });
 }
 
 

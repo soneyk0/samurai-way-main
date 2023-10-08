@@ -3,7 +3,6 @@ import dialogsReducer from "./dialogs-reducer";
 
 export type ProfileType = {
     photos: { small: string, large: string }
-    status:string
 }
 
 export type PostsType = {
@@ -25,6 +24,7 @@ export type ProfilePageType = {
     posts: Array<PostsType>
     newPostText: string
     profile: ProfileType
+    status:string
 
 
 }
@@ -52,7 +52,8 @@ export type ActionsTypes =
     | UpdateNewPostTextActionType
     | UpdateNewMessageTextActionType
     | SendMessageActionType
-    | setUserProfileType;
+    | setUserProfileType
+    | setStatusType;
 
 export type AddPostActionType = {
     type: 'ADD-POST'
@@ -76,6 +77,11 @@ export type setUserProfileType = {
     profile: ProfileType
 }
 
+export type setStatusType = {
+    type: 'SET_STATUS',
+    status: string
+}
+
 let store: StoreType = {
     _state: {
         profilePage: {
@@ -85,9 +91,9 @@ let store: StoreType = {
             ],
             newPostText: '',
             profile: {
-                photos: {small: '', large: ''},
-                status:''
+                photos: {small: '', large: ''}
             },
+            status:''
         },
         dialogPage: {
             dialogs: [
