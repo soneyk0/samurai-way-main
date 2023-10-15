@@ -22,7 +22,6 @@ export type PostsMessages = {
 
 export type ProfilePageType = {
     posts: Array<PostsType>
-    newPostText: string
     profile: ProfileType
     status:string
 
@@ -31,7 +30,6 @@ export type ProfilePageType = {
 export type DialogPageType = {
     dialogs: Array<DialogsType>
     messages: Array<PostsMessages>
-    newMessageText: string
 }
 
 export type StateType = {
@@ -49,28 +47,18 @@ export type StoreType = {
 
 export type ActionsTypes =
     AddPostActionType
-    | UpdateNewPostTextActionType
-    | UpdateNewMessageTextActionType
     | SendMessageActionType
     | setUserProfileType
     | setStatusType;
 
 export type AddPostActionType = {
     type: 'ADD-POST'
-}
-
-export type UpdateNewPostTextActionType = {
-    type: 'UPDATE-NEW-POST-TEXT'
-    newText: string
-}
-
-export type UpdateNewMessageTextActionType = {
-    type: 'UPDATE-NEW-MESSAGE-TEXT'
-    body: string
+    newPostText:string
 }
 
 export type SendMessageActionType = {
-    type: 'SEND-MESSAGE'
+    type: 'SEND-MESSAGE',
+    newMessageBody:string
 }
 export type setUserProfileType = {
     type: 'SET_USER_PROFILE',
@@ -89,7 +77,6 @@ let store: StoreType = {
                 {id: 1, message: 'hi how are you', likesCount: 0},
                 {id: 2, message: 'Its my first post', likesCount: 23},
             ],
-            newPostText: '',
             profile: {
                 photos: {small: '', large: ''}
             },
@@ -111,8 +98,7 @@ let store: StoreType = {
                 {id: 4, message: 'Yo'},
                 {id: 5, message: 'Yo'},
                 {id: 6, message: 'Yo'}
-            ],
-            newMessageText: ''
+            ]
 
         }
 

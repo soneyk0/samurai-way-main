@@ -1,7 +1,5 @@
 import React, {useRef} from "react";
 import s from './../Dialogs.module.css'
-import {NavLink} from "react-router-dom";
-import {message} from "antd";
 import {PostsMessages} from "../../../redux/store";
 
 
@@ -9,9 +7,6 @@ import {PostsMessages} from "../../../redux/store";
 const Message = (props: PostsMessages) => {
 
     const newMessageElement=useRef<HTMLTextAreaElement>(null);
-    const newMessage=()=>{
-        alert(newMessageElement.current?.value)
-    }
 
     return (
     <div>
