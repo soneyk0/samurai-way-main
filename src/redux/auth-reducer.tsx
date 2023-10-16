@@ -1,5 +1,5 @@
-import {Dispatch} from "redux";
 import {authAPI} from "../api/api";
+import {ThunkDispatch} from "redux-thunk";
 
 
 export let initialState = {
@@ -21,7 +21,6 @@ const authReducer = (state: InitialStateType = initialState, action: ActionType)
             return {
                 ...state,
                 ...action.data,
-                isAuth: true
             }
         default:
             return state
@@ -29,21 +28,40 @@ const authReducer = (state: InitialStateType = initialState, action: ActionType)
 }
 
 
-export const setAuthUserDataAC = (userId: null, email:null, login: null) => {
+export const setAuthUserDataAC = (userId: null, email: null, login: null, isAuth: boolean) => {
     return {
         type: 'SET_USER_DATA',
-        data:{userId,email,login}
+        data: {userId, email, login, isAuth}
     } as const
 }
 
-export const getAuthUserDataTC=() => (dispatch:Dispatch) => {
-    authAPI.me()
+export const getAuthUserDataTC = () => async (dispatch: ThunkDispatch<any, any, any>) =>{
+    return authAPI.me()
         .then(response => {
             if (response.data.resultCode === 0) {
-                let {userId, email, login} = response.data.data
-                dispatch(setAuthUserDataAC(userId, email, login));
+                let {userId, email, login,isAuth} = response.data.data
+                dispatch(setAuthUserDataAC(userId, email, login, true));
             }
         });
 }
+
+export const loginTC = (email: string, password: string, rememberMe: boolean) => (dispatch: ThunkDispatch<any, any, any>) => {
+    authAPI.login(email, password, rememberMe)
+        .then((response) => {
+            if (response.data.resultCode === 0) {
+                dispatch(getAuthUserDataTC());
+            }
+        });
+}
+
+export const logoutTC = () => (dispatch: ThunkDispatch<any, any, any>) => {
+    authAPI.logout()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(getAuthUserDataTC());
+            }
+        });
+}
+
 
 export default authReducer;

@@ -5,6 +5,7 @@ import {NavLink} from "react-router-dom";
 type HeaderTypePage = {
     isAuth: boolean
     login: null
+    logout:()=>void
 }
 
 const Header = (props: HeaderTypePage) => {
@@ -13,8 +14,8 @@ const Header = (props: HeaderTypePage) => {
             <img src='https://nettox.net/upload/CAllcorp3/312/hf0t8t1e29hr26hkqxmscb57emme8k46.svg' alt=""/>
 
             <div className={s.loginBlock}>
-                {props.isAuth ? <span className={s.login }>{props.login}</span>
-
+                {props.isAuth
+                    ? <span className={s.login }>{props.login} - <button onClick={props.logout}>Log out</button></span>
                     : <NavLink to={'/login'} activeClassName={s.activeLink}>Login</NavLink>}
             </div>
         </header>
