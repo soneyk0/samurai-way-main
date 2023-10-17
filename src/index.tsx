@@ -2,9 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import store, {AppRootStateType} from "./redux/redux-store";
+import store from "./redux/redux-store";
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
+
+type Type = {
+    initializeApp: () => void
+    initialized: boolean
+}
 
 ReactDOM.render(
     <BrowserRouter>

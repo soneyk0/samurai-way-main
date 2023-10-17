@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {AppRootStateType} from "../../redux/redux-store";
 import {getStatusTC, getUserProfileTC, updateStatusTC} from "../../redux/profile-reducer";
 import {ProfileType} from "../../redux/store";
-import {useLocation, useParams,} from "react-router-dom";
+import {Redirect, useLocation, useParams,} from "react-router-dom";
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose} from "redux";
 
@@ -41,6 +41,9 @@ class ProfileContainer extends React.Component<ProfileContainerType> {
         let userId = this.props.router.params.userId
         if (!userId) {
             userId = this.props.authorizedUserId;
+            if(!userId){
+                <Redirect to={'/login'}/>
+            }
         }
         this.props.getUserProfile(userId)
         this.props.getStatus(userId)
