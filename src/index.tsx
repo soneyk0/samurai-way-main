@@ -6,10 +6,6 @@ import store from "./redux/redux-store";
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 
-type Type = {
-    initializeApp: () => void
-    initialized: boolean
-}
 
 ReactDOM.render(
     <BrowserRouter>
