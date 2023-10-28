@@ -23,7 +23,7 @@ export type PostsMessages = {
 export type ProfilePageType = {
     posts: Array<PostsType>
     profile: ProfileType
-    status:string
+    status: string
 
 
 }
@@ -49,16 +49,17 @@ export type ActionsTypes =
     AddPostActionType
     | SendMessageActionType
     | setUserProfileType
-    | setStatusType;
+    | setStatusType
+    | deletePostType
 
 export type AddPostActionType = {
     type: 'ADD-POST'
-    newPostText:string
+    newPostText: string
 }
 
 export type SendMessageActionType = {
     type: 'SEND-MESSAGE',
-    newMessageBody:string
+    newMessageBody: string
 }
 export type setUserProfileType = {
     type: 'SET_USER_PROFILE',
@@ -68,6 +69,11 @@ export type setUserProfileType = {
 export type setStatusType = {
     type: 'SET_STATUS',
     status: string
+}
+
+export type deletePostType = {
+    type: 'DELETE_POST',
+    postId: number
 }
 
 let store: StoreType = {
@@ -80,7 +86,7 @@ let store: StoreType = {
             profile: {
                 photos: {small: '', large: ''}
             },
-            status:''
+            status: ''
         },
         dialogPage: {
             dialogs: [

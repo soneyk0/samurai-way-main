@@ -1,6 +1,6 @@
 import {
     ActionsTypes,
-    AddPostActionType,
+    AddPostActionType, deletePostType,
     ProfileType, setStatusType,
     setUserProfileType,
 } from "./store";
@@ -53,13 +53,18 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionsT
                 ...state, status: action.status
             }
         }
+        case 'DELETE_POST': {
+            return {
+                ...state, posts: state.posts.filter(p => p.id != action.postId)
+            }
+        }
         default:
             return state;
     }
 
 }
 
-export const addPostActionCreator = (newPostText:string): AddPostActionType => {
+export const addPostActionCreator = (newPostText: string): AddPostActionType => {
     return {
         type: 'ADD-POST',
         newPostText
@@ -78,6 +83,12 @@ export const setStatusAC = (status: string): setStatusType => {
     return {
         type: 'SET_STATUS',
         status
+    } as const
+}
+export const deletePostAC = (postId: number): deletePostType => {
+    return {
+        type: 'DELETE_POST',
+        postId
     } as const
 }
 
