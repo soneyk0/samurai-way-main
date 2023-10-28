@@ -4,7 +4,7 @@ import {AppRootStateType} from "./redux-store";
 import {stopSubmit} from "redux-form";
 import {FormAction} from "redux-form/lib/actions"
 
-
+const SET_USER_DATA = 'network/auth/SET_USER_DATA'
 export let initialState = {
     userId: null,
     email: null,
@@ -20,7 +20,7 @@ type ActionType = setUserDataACType
 
 const authReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
-        case 'SET_USER_DATA':
+        case SET_USER_DATA:
             return {
                 ...state,
                 ...action.data,
@@ -33,40 +33,34 @@ const authReducer = (state: InitialStateType = initialState, action: ActionType)
 
 export const setAuthUserDataAC = (userId: null, email: null, login: null, isAuth: boolean) => {
     return {
-        type: 'SET_USER_DATA',
+        type: SET_USER_DATA,
         data: {userId, email, login, isAuth}
     } as const
 }
 
 export const getAuthUserDataTC = () => async (dispatch: ThunkDispatch<any, any, any>) => {
-    return authAPI.me()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                let {userId, email, login, isAuth} = response.data.data
-                dispatch(setAuthUserDataAC(userId, email, login, true));
-            }
-        });
+    let response = await authAPI.me();
+    if (response.data.resultCode === 0) {
+        let {userId, email, login, isAuth} = response.data.data
+        dispatch(setAuthUserDataAC(userId, email, login, true));
+    }
 }
 
-export const loginTC = (email: string, password: string, rememberMe: boolean) => (dispatch: ThunkDispatch<AppRootStateType, unknown, FormAction>) => {
-    authAPI.login(email, password, rememberMe)
-        .then((response) => {
-            if (response.data.resultCode === 0) {
-                dispatch(getAuthUserDataTC());
-            } else {
-                let message = response.data.messages.length > 0 ? response.data.messages[0]:'Some error';
-                dispatch(stopSubmit('login', {_error: message}) as FormAction)
-            }
-        });
+export const loginTC = (email: string, password: string, rememberMe: boolean) => async (dispatch: ThunkDispatch<AppRootStateType, unknown, FormAction>) => {
+    let response = await authAPI.login(email, password, rememberMe);
+    if (response.data.resultCode === 0) {
+        dispatch(getAuthUserDataTC());
+    } else {
+        let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error';
+        dispatch(stopSubmit('login', {_error: message}) as FormAction)
+    }
 }
 
-export const logoutTC = () => (dispatch: ThunkDispatch<AppRootStateType, unknown, ActionType>) => {
-    authAPI.logout()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(getAuthUserDataTC());
-            }
-        });
+export const logoutTC = () => async (dispatch: ThunkDispatch<AppRootStateType, unknown, ActionType>) => {
+    let response = await authAPI.logout();
+    if (response.data.resultCode === 0) {
+        dispatch(getAuthUserDataTC());
+    }
 }
 
 
