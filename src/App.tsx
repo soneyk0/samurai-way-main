@@ -1,13 +1,11 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import {BrowserRouter, Route, withRouter} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
 import {connect, Provider} from "react-redux";
@@ -15,6 +13,9 @@ import {initializeAppTC} from "./redux/app-reducer";
 import store, {AppRootStateType} from "./redux/redux-store";
 import Preloader from "./components/common/Preloader/Preloader";
 import {compose} from "redux";
+
+const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
+const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"))
 
 type AppType = {
     initializeApp: () => void
@@ -39,8 +40,16 @@ class App extends React.Component <AppType> {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className={'app-wrapper-content'}>
-                    <Route path='/dialogs' render={() => <DialogsContainer/>}/>
-                    <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
+                    <Route path='/dialogs' render={() => {
+                        return <Suspense fallback={<Preloader/>}>
+                            <DialogsContainer/>
+                        </Suspense>
+                    }}/>
+                    <Route path='/profile/:userId?' render={() => {
+                        return <Suspense fallback={<Preloader/>}>
+                            <ProfileContainer/>
+                        </Suspense>
+                    }}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
@@ -56,11 +65,11 @@ const mapStateToProps = (state: AppRootStateType) => ({
     initialized: state.app.initialized
 })
 
-let AppContainer= compose<React.ComponentType>(
+let AppContainer = compose<React.ComponentType>(
     withRouter,
     connect(mapStateToProps, {initializeApp: initializeAppTC}))(App)
 
-const  MainApp=()=>{
+const MainApp = () => {
     return <BrowserRouter>
         <Provider store={store}>
             <AppContainer/>
