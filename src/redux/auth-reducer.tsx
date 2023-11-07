@@ -4,21 +4,25 @@ import {AppRootStateType} from "./redux-store";
 import {stopSubmit} from "redux-form";
 import {FormAction} from "redux-form/lib/actions"
 
-const SET_USER_DATA = 'network/auth/SET_USER_DATA'
-export let initialState = {
-    userId: null,
-    email: null,
-    login: null,
-    isAuth: false
+export class UserModel {
+    id?: number;
+    email?: string;
+    login?: string
 }
 
-export type InitialStateType = typeof initialState
+export class AuthModel extends UserModel {
+    isAuth: boolean = false
+}
+
+const SET_USER_DATA = 'network/auth/SET_USER_DATA'
+export let initialState = new AuthModel()
+
 export type setUserDataACType = ReturnType<typeof setAuthUserDataAC>
 
 
 type ActionType = setUserDataACType
 
-const authReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
+const authReducer = (state: AuthModel = initialState, action: ActionType): AuthModel => {
     switch (action.type) {
         case SET_USER_DATA:
             return {
@@ -31,25 +35,24 @@ const authReducer = (state: InitialStateType = initialState, action: ActionType)
 }
 
 
-export const setAuthUserDataAC = (userId: null, email: null, login: null, isAuth: boolean) => {
+export const setAuthUserDataAC = (data: AuthModel) => {
     return {
         type: SET_USER_DATA,
-        data: {userId, email, login, isAuth}
+        data
     } as const
 }
 
 export const getAuthUserDataTC = () => async (dispatch: ThunkDispatch<any, any, any>) => {
-    let response = await authAPI.me();
-    if (response.data.resultCode === 0) {
-        let {userId, email, login, isAuth} = response.data.data
-        dispatch(setAuthUserDataAC(userId, email, login, true));
+    const {data} = await authAPI.me();
+    if (data.resultCode === 0) {
+        dispatch(setAuthUserDataAC({...data.data, isAuth: true}));
     }
 }
 
 export const loginTC = (email: string, password: string, rememberMe: boolean) => async (dispatch: ThunkDispatch<AppRootStateType, unknown, FormAction>) => {
     let response = await authAPI.login(email, password, rememberMe);
     if (response.data.resultCode === 0) {
-        dispatch(getAuthUserDataTC());
+        await dispatch(getAuthUserDataTC());
     } else {
         let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error';
         dispatch(stopSubmit('login', {_error: message}) as FormAction)
@@ -59,7 +62,7 @@ export const loginTC = (email: string, password: string, rememberMe: boolean) =>
 export const logoutTC = () => async (dispatch: ThunkDispatch<AppRootStateType, unknown, ActionType>) => {
     let response = await authAPI.logout();
     if (response.data.resultCode === 0) {
-        dispatch(getAuthUserDataTC());
+        dispatch(setAuthUserDataAC({...new UserModel(), isAuth: false}));
     }
 }
 

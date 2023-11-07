@@ -1,13 +1,13 @@
 import React from "react";
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
-import {PostsType} from "../../../redux/profile-reducer";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {maxLengthCreator, required} from "../../../utils/validators/validators";
 import {Textarea} from "../../common/FormsControls/FormsControls";
+import {PostModel} from "../../../redux/profile-reducer";
 
 type MyPostsType = {
-    posts: Array<PostsType>
+    posts: PostModel[]
     addPost: (newPostText: string) => void
 }
 
@@ -19,7 +19,7 @@ type FormDataType = {
 const MyPosts = React.memo((props: MyPostsType) => {
 
     let postsElements =
-        props.posts.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
+        props.posts.map(p => <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
     let onAddPost = (values: FormDataType) => {
         props.addPost(values.newPostText)

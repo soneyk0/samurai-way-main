@@ -5,7 +5,7 @@ import {AppRootStateType} from "../../redux/redux-store";
 import {logoutTC} from "../../redux/auth-reducer";
 
 type HeaderContainerType = {
-    login: null
+    login?:string
     isAuth: boolean
     logout:()=>void
 }

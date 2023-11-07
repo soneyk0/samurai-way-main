@@ -1,15 +1,7 @@
-import profileReducer from "./profile-reducer";
+import profileReducer, {PostModel, ProfileModel} from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
+import {UserModel} from "./auth-reducer";
 
-export type ProfileType = {
-    photos: { small: string, large: string }
-}
-
-export type PostsType = {
-    id: number,
-    message: string,
-    likesCount: number
-}
 export type DialogsType = {
     id: number,
     name: string
@@ -21,8 +13,8 @@ export type PostsMessages = {
 }
 
 export type ProfilePageType = {
-    posts: Array<PostsType>
-    profile: ProfileType
+    posts: PostModel[]
+    profile: ProfileModel
     status: string
 
 
@@ -51,6 +43,7 @@ export type ActionsTypes =
     | setUserProfileType
     | setStatusType
     | deletePostType
+    | savePhotoType
 
 export type AddPostActionType = {
     type: 'ADD-POST'
@@ -63,7 +56,7 @@ export type SendMessageActionType = {
 }
 export type setUserProfileType = {
     type: 'SET_USER_PROFILE',
-    profile: ProfileType
+    profile: ProfileModel
 }
 
 export type setStatusType = {
@@ -73,118 +66,69 @@ export type setStatusType = {
 
 export type deletePostType = {
     type: 'DELETE_POST',
-    postId: number
+    postId: string
+}
+
+export type savePhotoType = {
+    type: 'SAVE_PHOTO_SUCCESS',
+    photos: { small: '', large: '' }
 }
 
 let store: StoreType = {
     _state: {
         profilePage: {
             posts: [
-                {id: 1, message: 'hi how are you', likesCount: 0},
-                {id: 2, message: 'Its my first post', likesCount: 23},
+                {id: '1', message: 'hi how are you', likesCount: 0},
+                {id: '2', message: 'Its my first post', likesCount: 23},
             ],
             profile: {
-                photos: {small: '', large: ''}
+                photos: {small: '', large: ''},
+                fullName: '',
+                lookingForAJob: false,
+                lookingForAJobDescription: '',
+                aboutMe: '',
+                contacts: [{github: '', vk: '', facebook: '', instagram: ''}]},
+                status: ''
             },
-            status: ''
+            dialogPage: {
+                dialogs: [
+                    {id: 1, name: 'Yana'},
+                    {id: 2, name: 'Dimych'},
+                    {id: 3, name: 'Alina'},
+                    {id: 4, name: 'Anna'},
+                    {id: 5, name: 'Nikita'},
+                    {id: 6, name: 'Sveta'}
+                ],
+                messages: [
+                    {id: 1, message: 'Hi'},
+                    {id: 2, message: 'How is your it-kamasutra?'},
+                    {id: 3, message: 'Yo'},
+                    {id: 4, message: 'Yo'},
+                    {id: 5, message: 'Yo'},
+                    {id: 6, message: 'Yo'}
+                ]
+
+            }
+
         },
-        dialogPage: {
-            dialogs: [
-                {id: 1, name: 'Yana'},
-                {id: 2, name: 'Dimych'},
-                {id: 3, name: 'Alina'},
-                {id: 4, name: 'Anna'},
-                {id: 5, name: 'Nikita'},
-                {id: 6, name: 'Sveta'}
-            ],
-            messages: [
-                {id: 1, message: 'Hi'},
-                {id: 2, message: 'How is your it-kamasutra?'},
-                {id: 3, message: 'Yo'},
-                {id: 4, message: 'Yo'},
-                {id: 5, message: 'Yo'},
-                {id: 6, message: 'Yo'}
-            ]
+        getState() {
+            return this._state
+        },
+        _callSubscriber() {
+            console.log('state changed')
+        },
+        subscribe(callback) {
+            this._callSubscriber = callback;
+
+        },
+        dispatch(action) { // {type: 'название действия'}
+
+            this._state.profilePage = profileReducer(this._state.profilePage, action);
+            this._state.dialogPage = dialogsReducer(this._state.dialogPage, action);
+
+            this._callSubscriber();
 
         }
-
-    },
-    getState() {
-        return this._state
-    },
-    _callSubscriber() {
-        console.log('state changed')
-    },
-    subscribe(callback) {
-        this._callSubscriber = callback;
-
-    },
-    dispatch(action) { // {type: 'название действия'}
-
-        this._state.profilePage = profileReducer(this._state.profilePage, action);
-        this._state.dialogPage = dialogsReducer(this._state.dialogPage, action);
-
-        this._callSubscriber();
-
     }
-}
 
-
-// let state: StateType = {
-//     profilePage: {
-//         posts: [
-//             {id: 1, message: 'hi how are you', likesCount: 0},
-//             {id: 2, message: 'Its my first post', likesCount: 23},
-//         ],
-//         newPostText: '',
-//     },
-//     dialogPage: {
-//         dialogs: [
-//             {id: 1, name: 'Yana'},
-//             {id: 2, name: 'Dimych'},
-//             {id: 3, name: 'Alina'},
-//             {id: 4, name: 'Anna'},
-//             {id: 5, name: 'Nikita'},
-//             {id: 6, name: 'Sveta'}
-//         ],
-//         messages: [
-//             {id: 1, message: 'Hi'},
-//             {id: 2, message: 'How is your it-kamasutra?'},
-//             {id: 3, message: 'Yo'},
-//             {id: 4, message: 'Yo'},
-//             {id: 5, message: 'Yo'},
-//             {id: 6, message: 'Yo'}
-//         ]
-//     }
-//
-// }
-
-
-// let rerenderEntireTree=()=>{
-//     console.log('state changed')
-//
-// }
-
-// export const addPost = () => {
-//     const newPost: PostsType = {
-//         id: 5,
-//         message: state.profilePage.newPostText,
-//         likesCount: 10
-//     }
-//     state.profilePage.posts.push(newPost);
-//     state.profilePage.newPostText = ''
-//     rerenderEntireTree();
-// }
-
-
-// export const updateNewPostText = (newText: string) => {
-//     state.profilePage.newPostText = newText;
-//     rerenderEntireTree();
-// }
-
-// export const subscribe=(callback:()=>void)=>{
-//     rerenderEntireTree=callback;
-//
-// }
-
-export default store;
+    export default store;

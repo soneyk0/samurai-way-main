@@ -1,15 +1,6 @@
-import profileReducer, {addPostActionCreator, deletePostAC, PostsType} from "./profile-reducer";
+import profileReducer, {addPostActionCreator, deletePostAC, ProfileReducerState} from "./profile-reducer";
 
-let state = {
-    posts: [
-        {id: 1, message: 'hi how are you', likesCount: 0},
-        {id: 2, message: 'Its my first post', likesCount: 23},
-    ] as Array<PostsType>,
-    profile: {
-        photos: {small: '', large: ''},
-    },
-    status: ''
-}
+let state = new ProfileReducerState()
 
 it('length of post should be incremented', () => {
     let action = addPostActionCreator('it-kamasutra.com')
@@ -29,7 +20,7 @@ it('message of new post', () => {
 })
 
 it('after deleting length', () => {
-    let action = deletePostAC(1)
+    let action = deletePostAC('1')
 
     let newState = profileReducer(state, action)
 
@@ -37,7 +28,7 @@ it('after deleting length', () => {
 })
 
 it('after deleting length shouldnt be decrement if id is incorrect', () => {
-    let action = deletePostAC(4)
+    let action = deletePostAC('4')
 
     let newState = profileReducer(state, action)
 
