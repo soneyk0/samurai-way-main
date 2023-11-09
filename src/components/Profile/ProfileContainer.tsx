@@ -2,10 +2,18 @@ import React from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../redux/redux-store";
-import {getStatusTC, getUserProfileTC, ProfileModel, savePhotoTC, updateStatusTC} from "../../redux/profile-reducer";
+import {
+    getStatusTC,
+    getUserProfileTC,
+    ProfileModel,
+    savePhotoTC,
+    saveProfileTC,
+    updateStatusTC
+} from "../../redux/profile-reducer";
 import {Redirect, useLocation, useParams,} from "react-router-dom";
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose} from "redux";
+import {ProfileFormDataType} from "./ProfileInfo/ProfileDataForm";
 
 type ProfileContainerType = {
     getUserProfile: (userId: string) => void,
@@ -17,6 +25,7 @@ type ProfileContainerType = {
     status: string
     authorizedUserId: string
     savePhoto: (photoFile: File) => void
+    saveProfile:(profile:ProfileFormDataType)=>void
 
 }
 
@@ -64,7 +73,7 @@ class ProfileContainer extends React.Component<ProfileContainerType> {
         return (
             <Profile {...this.props}
                      isOwner={!this.props.router.params['userId']}
-                     profile={this.props.profile}
+                     saveProfile={this.props.saveProfile}
                      updateStatus={this.props.updateStatus}
                      status={this.props.status}
                      savePhoto={this.props.savePhoto}/>
@@ -87,7 +96,8 @@ export default compose<React.ComponentType>(
         getUserProfile: getUserProfileTC,
         getStatus: getStatusTC,
         updateStatus: updateStatusTC,
-        savePhoto: savePhotoTC
+        savePhoto: savePhotoTC,
+        saveProfile:saveProfileTC
     }),
     withRouter,
     WithAuthRedirect

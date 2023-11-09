@@ -2,6 +2,7 @@ import React from "react";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import {ProfileModel} from "../../redux/profile-reducer";
+import {ProfileFormDataType} from "./ProfileInfo/ProfileDataForm";
 
 
 
@@ -11,6 +12,7 @@ type ProfileTypePage = {
     status: string
     isOwner: boolean
     savePhoto: (photoFile: File) => void
+    saveProfile:(profile:ProfileFormDataType)=>void
 
 }
 
@@ -22,6 +24,7 @@ const Profile = (props: ProfileTypePage) => {
                 updateStatus={props.updateStatus}
                 status={props.status}
                 isOwner={props.isOwner}
+                saveProfile={props.saveProfile}
                 savePhoto={props.savePhoto}/>
             <MyPostsContainer/>
         </div>

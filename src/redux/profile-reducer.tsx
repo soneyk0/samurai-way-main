@@ -1,15 +1,20 @@
 import {
     ActionsTypes,
     AddPostActionType, deletePostType, savePhotoType, setStatusType,
-    setUserProfileType,
+    setUserProfileType, StateType,
 } from "./store";
-import {Dispatch} from "redux";
+import {AnyAction, Dispatch} from "redux";
 import {profileAPI, usersAPI} from "../api/api";
 import {v1} from "uuid";
+import {ProfileFormDataType} from "../components/Profile/ProfileInfo/ProfileDataForm";
+import {ThunkDispatch} from "redux-thunk";
+import {AppRootStateType} from "./redux-store";
+import {FormAction} from "redux-form/lib/actions";
+import {stopSubmit} from "redux-form";
 
 
 export class PostModel {
-    id: string =v1()
+    id: string = v1()
     message: string
     likesCount: number
 
@@ -144,6 +149,17 @@ export const savePhotoTC = (file: File) => async (dispatch: Dispatch) => {
     let response = await profileAPI.savePhoto(file)
     if (response.data.resultCode === 0) {
         dispatch(savePhotoAC(response.data.data.photos));
+    }
+}
+
+export const saveProfileTC = (profile: ProfileFormDataType) => async (dispatch: ThunkDispatch<AppRootStateType, unknown, FormAction>, getState: () => any) => {
+    const userId = getState().auth.id
+    console.log(userId)
+    let response = await profileAPI.saveProfile(profile)
+    if (response.data.resultCode === 0) {
+        await dispatch(getUserProfileTC(userId))
+    } else {
+        dispatch(stopSubmit('edit-profile', {_error: response.data.message[0]}) as FormAction)
     }
 }
 

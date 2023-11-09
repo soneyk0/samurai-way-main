@@ -87,48 +87,49 @@ let store: StoreType = {
                 lookingForAJob: false,
                 lookingForAJobDescription: '',
                 aboutMe: '',
-                contacts: [{github: '', vk: '', facebook: '', instagram: ''}]},
-                status: ''
+                contacts: [{github: '', vk: '', facebook: '', instagram: ''}]
             },
-            dialogPage: {
-                dialogs: [
-                    {id: 1, name: 'Yana'},
-                    {id: 2, name: 'Dimych'},
-                    {id: 3, name: 'Alina'},
-                    {id: 4, name: 'Anna'},
-                    {id: 5, name: 'Nikita'},
-                    {id: 6, name: 'Sveta'}
-                ],
-                messages: [
-                    {id: 1, message: 'Hi'},
-                    {id: 2, message: 'How is your it-kamasutra?'},
-                    {id: 3, message: 'Yo'},
-                    {id: 4, message: 'Yo'},
-                    {id: 5, message: 'Yo'},
-                    {id: 6, message: 'Yo'}
-                ]
-
-            }
-
+            status: ''
         },
-        getState() {
-            return this._state
-        },
-        _callSubscriber() {
-            console.log('state changed')
-        },
-        subscribe(callback) {
-            this._callSubscriber = callback;
-
-        },
-        dispatch(action) { // {type: 'название действия'}
-
-            this._state.profilePage = profileReducer(this._state.profilePage, action);
-            this._state.dialogPage = dialogsReducer(this._state.dialogPage, action);
-
-            this._callSubscriber();
+        dialogPage: {
+            dialogs: [
+                {id: 1, name: 'Yana'},
+                {id: 2, name: 'Dimych'},
+                {id: 3, name: 'Alina'},
+                {id: 4, name: 'Anna'},
+                {id: 5, name: 'Nikita'},
+                {id: 6, name: 'Sveta'}
+            ],
+            messages: [
+                {id: 1, message: 'Hi'},
+                {id: 2, message: 'How is your it-kamasutra?'},
+                {id: 3, message: 'Yo'},
+                {id: 4, message: 'Yo'},
+                {id: 5, message: 'Yo'},
+                {id: 6, message: 'Yo'}
+            ]
 
         }
-    }
 
-    export default store;
+    },
+    getState() {
+        return this._state
+    },
+    _callSubscriber() {
+        console.log('state changed')
+    },
+    subscribe(callback) {
+        this._callSubscriber = callback;
+
+    },
+    dispatch(action) { // {type: 'название действия'}
+
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogPage = dialogsReducer(this._state.dialogPage, action);
+
+        this._callSubscriber();
+
+    }
+}
+
+export default store;
