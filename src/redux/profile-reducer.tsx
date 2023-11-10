@@ -3,7 +3,7 @@ import {
     AddPostActionType, deletePostType, savePhotoType, setStatusType,
     setUserProfileType, StateType,
 } from "./store";
-import {AnyAction, Dispatch} from "redux";
+import {Dispatch} from "redux";
 import {profileAPI, usersAPI} from "../api/api";
 import {v1} from "uuid";
 import {ProfileFormDataType} from "../components/Profile/ProfileInfo/ProfileDataForm";

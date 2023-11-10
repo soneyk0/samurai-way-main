@@ -5,7 +5,6 @@ import userPhoto from "../../../assets/images/user.png";
 import styles from "../../Profile/ProfileInfo/ProfileInfo.module.css"
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import {ProfileModel} from "../../../redux/profile-reducer";
-import profile from "../Profile";
 import ProfileDataForm, {ProfileFormDataType} from "./ProfileDataForm";
 
 type ProfileInfoType = {

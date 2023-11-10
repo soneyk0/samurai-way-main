@@ -2,6 +2,7 @@ import axios from "axios";
 import {ProfileModel} from "../redux/profile-reducer";
 import {UserModel} from "../redux/auth-reducer";
 import {ProfileFormDataType} from "../components/Profile/ProfileInfo/ProfileDataForm";
+import {LoginFormData} from "../components/Login/Login";
 
 const instance = axios.create({
     withCredentials: true,
@@ -40,8 +41,8 @@ export const authAPI = {
     me() {
         return instance.get<BaseResponse<Required<UserModel>>>(`auth/me`);
     },
-    login(email: string, password: string, rememberMe = false) {
-        return instance.post(`auth/login`, {email, password, rememberMe});
+    login(payload:LoginFormData) {
+        return instance.post(`auth/login`, payload);
     },
     logout() {
         return instance.delete(`auth/login`);
@@ -72,6 +73,14 @@ export const profileAPI = {
         return instance.put(`profile`, profile)
     }
 }
+
+export const securityAPI = {
+    getCaptchaURL() {
+        return instance.get(`security/get-captcha-url`);
+    },
+}
+
+
 
 
 
