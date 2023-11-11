@@ -1,7 +1,7 @@
 import {
     ActionsTypes,
     AddPostActionType, deletePostType, savePhotoType, setStatusType,
-    setUserProfileType, StateType,
+    setUserProfileType,
 } from "./store";
 import {Dispatch} from "redux";
 import {profileAPI, usersAPI} from "../api/api";
@@ -139,10 +139,10 @@ export const getStatusTC = (userId: string) => async (dispatch: Dispatch) => {
 }
 
 export const updateStatusTC = (status: string) => async (dispatch: Dispatch) => {
-    let response = await profileAPI.updateStatus(status)
-    if (response.data.resultCode === 0) {
-        dispatch(setStatusAC(status));
-    }
+        let response = await profileAPI.updateStatus(status)
+        if (response.data.resultCode === 0) {
+            dispatch(setStatusAC(status));
+        }
 }
 
 export const savePhotoTC = (file: File) => async (dispatch: Dispatch) => {

@@ -1,6 +1,5 @@
 import profileReducer, {PostModel, ProfileModel} from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
-import {UserModel} from "./auth-reducer";
 
 export type DialogsType = {
     id: number,
