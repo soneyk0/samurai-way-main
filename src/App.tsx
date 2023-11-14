@@ -1,7 +1,7 @@
 import React, {Suspense} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
+import {BrowserRouter, HashRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
@@ -59,7 +59,7 @@ class App extends React.Component <AppType> {
                         <Route path='/settings' render={() => <Settings/>}/>
                         <Route path='/users' render={() => <UsersContainer/>}/>
                         <Route path='/login' render={() => <Login/>}/>
-                        <Route path='*' render={() => <div>404 NOT FOUND</div>}/>
+                        <Route path='/*' render={() => <div>404 NOT FOUND</div>}/>
                     </Switch>
                 </div>
             </div>
@@ -76,11 +76,11 @@ let AppContainer = compose<React.ComponentType>(
     connect(mapStateToProps, {initializeApp: initializeAppTC}))(App)
 
 const MainApp = () => {
-    return <BrowserRouter>
+    return <HashRouter>
         <Provider store={store}>
             <AppContainer/>
         </Provider>
-    </BrowserRouter>
+    </HashRouter>
 }
 
 export default MainApp
