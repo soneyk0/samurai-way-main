@@ -1,4 +1,46 @@
 .userPhoto {
-    width: 200px;
+    width: 160px;
     height: 130px;
+}
+.user{
+    padding-bottom: 50px;
+    padding-left: 10px;
+}
+.listOfUsers{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    margin-top: 30px;
+    margin-left: 50px;
+}
+
+.paginator{
+    margin-top: 10px;
+    margin-left: 440px;
+    margin-bottom: 50px;
+}
+
+.buttonFollowUnfollow{
+    width: 87px;
+    height: 38px;
+    border: 1px white solid;
+    border-radius: 5px;
+    background: #6E1E6C;
+    color: white;
+    padding: 4px 8px;
+    font-size: 14px;
+    margin-left: 35px;
+    margin-bottom: 10px;
+}
+
+.buttonFollowUnfollow:hover {
+    background: #BF1891;
+}
+.buttonFollowUnfollow:focus {
+    background-color: #E5CFDF;
+    color:#6E1E6C;
+}
+
+.buttonFollowUnfollow:disabled {
+    background-color: #6E1E6C;
+    color:#D8A1C9;
 }

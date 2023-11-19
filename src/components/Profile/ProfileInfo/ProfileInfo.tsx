@@ -7,7 +7,7 @@ import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import {ProfileModel} from "../../../redux/profile-reducer";
 import ProfileDataForm, {ProfileFormDataType} from "./ProfileDataForm";
 
-type ProfileInfoType = {
+export type ProfileInfoType = {
     profile: ProfileModel
     updateStatus: (status: string) => void
     status: string

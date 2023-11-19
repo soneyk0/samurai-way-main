@@ -86,9 +86,10 @@ let store: StoreType = {
                 lookingForAJob: false,
                 lookingForAJobDescription: '',
                 aboutMe: '',
-                contacts: [{github: '', vk: '', facebook: '', instagram: ''}]
+                contacts: [{github: '', vk: '', facebook: '', instagram: ''}],
+                location: { city: '', country: '' }
             },
-            status: ''
+            status: '',
         },
         dialogPage: {
             dialogs: [

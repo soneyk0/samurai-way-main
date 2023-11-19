@@ -29,6 +29,11 @@ export class PhotoType {
     large: string = ''
 }
 
+export class LocationType {
+    city: string = ''
+    country: string = ''
+}
+
 export class ContactType {
     github: string = ''
     vk: string = ''
@@ -43,6 +48,7 @@ export class ProfileModel {
     lookingForAJobDescription: string = ''
     aboutMe: string = ''
     contacts = [new ContactType()]
+    location= new LocationType()
 }
 
 export class ProfileReducerState {

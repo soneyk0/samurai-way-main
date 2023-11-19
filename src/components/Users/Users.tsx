@@ -1,7 +1,8 @@
 import React from "react";
 import {UsersType} from "../../redux/users-reducer";
-import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
+import {Pagination, Stack} from "@mui/material";
+import s from './users.module.css'
 
 export type UsersPageType = {
     users: Array<UsersType>,
@@ -15,18 +16,20 @@ export type UsersPageType = {
 }
 
 let Users = ({currentPage, onPageChanged, totalUsersCount, pageSize, users, ...props}: UsersPageType) => {
+    let pagesCount = Math.ceil(totalUsersCount / pageSize)
     return <div>
-        <Paginator currentPage={currentPage} onPageChanged={onPageChanged} totalUsersCount={totalUsersCount}
-                   pageSize={pageSize}/>
-        <div>
+        <div className={s.listOfUsers}>
             {
-                users.map(u => <User key={u.id} user={u}
+                users.map(u => <User  key={u.id} user={u}
                                      isFollowingInProgress={props.isFollowingInProgress}
                                      unfollow={props.unfollow}
                                      follow={props.follow}
                 />)
             }
         </div>
+        <Stack spacing={2} className={s.paginator}>
+            <Pagination color={"secondary"} count={pagesCount} page={currentPage}  onChange={(event, page)=>onPageChanged(page)} showFirstButton showLastButton />
+        </Stack>
     </div>
 }
 

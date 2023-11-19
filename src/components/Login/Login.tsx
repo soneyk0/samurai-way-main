@@ -7,6 +7,8 @@ import {loginTC, logoutTC} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 import {AppRootStateType} from "../../redux/redux-store";
 import style from './../common/FormsControls/FormsControls.module.css'
+import s from './Login.module.css'
+import {Alert} from "@mui/material";
 
 
 export type LoginFormData = {
@@ -25,21 +27,33 @@ type LoginType = {
 
 const LoginForm: React.FC<InjectedFormProps<LoginFormData, {captchaUrl: string}> & {captchaUrl: string}> = ({handleSubmit, error,captchaUrl}) => {
     return (
-        <form onSubmit={handleSubmit}>
-            {createField('Email', 'email', [required], Input)}
-            {createField('Password', 'password', [required], Input, {type: 'password'})}
-            {createField(null, 'rememberMe', [], Input, {type: 'checkbox'}, 'remember me')}
+        <div>
+        <form onSubmit={handleSubmit} className={s.formBox}>
+            <div className={s.inputItem}>
+                <div>Email</div>
+                {createField('Please enter your email', 'email', [required], Input)}
+            </div>
+            <div className={s.inputItem}>
+                <div>Password</div>
+                {createField('Please enter your password', 'password', [required], Input, {type: 'password'})}
+            </div>
+            <div className={s.textRemember}>Remember me</div>
+            <div className={s.checkboxItem}>
+                {createField(null, 'rememberMe', [],Input , {type: 'checkbox'})}
+            </div>
+            <div className={s.captchaItem}>
+                {captchaUrl && <img src={captchaUrl}/>}
+                {captchaUrl && createField('Symbols from image', 'captcha', [required], Input, {})}
+            </div>
 
-            {captchaUrl && <img src={captchaUrl}/>}
-            {captchaUrl && createField('Symbols from image', 'captcha', [required], Input, {})}
-
-            {error && <div className={style.formSummaryError}>
-                {error}
-            </div>}
-            <div>
+            <div className={s.buttonLogin}>
                 <button>Login</button>
             </div>
         </form>
+            {error && <Alert variant="filled" severity="error" className={style.formSummaryError}>
+                {error}
+            </Alert>}
+        </div>
     )
 }
 

@@ -1,24 +1,31 @@
 .nav {
     grid-area: n;
-    background-color: #1c1c1B;
+    background-color: #6E1E6C;
     width: 100px;
     text-align: center;
     padding: 20px;
 
+
+}
+.icon{
+    padding-bottom: 20px;
 }
 
 .icon a {
     text-decoration: none;
-    color: #d6f60f;
+    color: white;
+}
 
-
+.icons{
+    width: 12px;
+    height: 12px;
 }
 
 .icon a.activeLink {
-    color: black;
-    border:#d6f60f;
-    background-color: #d6f60f;
-    border-radius: 2px;
-    padding: 1px;
+    color: white;
+    border:1px white solid;
+    background-color: #440044;
+    border-radius: 5px;
+    padding: 8px;
 
 }

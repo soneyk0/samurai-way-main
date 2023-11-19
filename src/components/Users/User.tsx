@@ -3,6 +3,7 @@ import styles from "./users.module.css";
 import userPhoto from "../../assets/images/user.png";
 import {UsersType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
+import s from './users.module.css'
 
 export type UsersPageType = {
     user: UsersType,
@@ -13,7 +14,7 @@ export type UsersPageType = {
 
 let User = ({user, isFollowingInProgress, unfollow,follow}: UsersPageType) => {
     return (
-        <div>
+        <div className={s.user}>
                 <span>
                     <div>
                         <NavLink to={'/profile/' + user.id}>
@@ -24,12 +25,12 @@ let User = ({user, isFollowingInProgress, unfollow,follow}: UsersPageType) => {
                     </div>
                     <div>
                         {user.followed
-                            ? <button disabled={isFollowingInProgress.some(id => id === user.id)} onClick={() => {
+                            ? <button className={s.buttonFollowUnfollow} disabled={isFollowingInProgress.some(id => id === user.id)} onClick={() => {
                                 unfollow(false, user.id)
 
 
                             }}>Unfollow</button>
-                            : <button disabled={isFollowingInProgress.some(id => id === user.id)} onClick={() => {
+                            : <button className={s.buttonFollowUnfollow} disabled={isFollowingInProgress.some(id => id === user.id)} onClick={() => {
                                 follow(true, user.id)
 
                             }}>Follow</button>}
@@ -37,12 +38,8 @@ let User = ({user, isFollowingInProgress, unfollow,follow}: UsersPageType) => {
                 </span>
             <span>
                     <span>
-                        <div>{user.name}</div>
-                        <div>{user.status}</div>
-                    </span>
-                    <span>
-                        <div>{'u.location.country'}</div>
-                        <div>{'u.location.city'}</div>
+                        <div>Full name: {user.name}</div>
+                        <div>Status: {user.status ? user.status : '-'}</div>
                     </span>
                 </span>
         </div>)
