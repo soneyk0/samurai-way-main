@@ -2,10 +2,10 @@ import React, {ChangeEvent, useState} from "react";
 import s from './ProfileInfo.module.css';
 import Preloader from "../../common/Preloader/Preloader";
 import userPhoto from "../../../assets/images/user.png";
-import styles from "../../Profile/ProfileInfo/ProfileInfo.module.css"
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import {ProfileModel} from "../../../redux/profile-reducer";
 import ProfileDataForm, {ProfileFormDataType} from "./ProfileDataForm";
+import AppButton from "../../common/Button/AppButton";
 
 export type ProfileInfoType = {
     profile: ProfileModel
@@ -39,17 +39,35 @@ const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, savePro
     return (
         <div>
             <div className={s.descriptionBlock}>
-                <img src={profile.photos.small ? profile.photos.small : userPhoto}
-                     className={styles.userPhoto} alt={'avatar'}/>
-                {isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
+                <div className={s.photoBlock}>
+                    <img src={profile.photos.large ? profile.photos.large : userPhoto}
+                         className={s.userPhoto} alt={'avatar'}/>
+                    {isOwner && <>
+                        <label htmlFor="inputFile" className={s.inputFileButton}>
+                            <AppButton title={'Add file'}></AppButton>
+                            <input
+                                name="file"
+                                type="file"
+                                id="inputFile"
+                                style={{display: "none"}}
+                                onChange={onMainPhotoSelected}
+                            />
+                        </label>
 
-                {editMode
-                    ? <ProfileDataForm initialValues={profile} onSubmit={onSubmit}/>
-                    : <ProfileData goToEditMode={() => {
-                        setEditMode(true)
-                    }} profile={profile} isOwner={isOwner}/>}
+                    </>}
+                </div>
 
-                <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
+                <div className={s.profileBlock}>
+                    <div className={s.statusBlock}>
+                        <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
+                    </div>
+                    {editMode
+                        ? <ProfileDataForm initialValues={profile} onSubmit={onSubmit}/>
+                        : <ProfileData goToEditMode={() => {
+                            setEditMode(true)
+                        }} profile={profile} isOwner={isOwner}/>}
+                </div>
+
             </div>
         </div>
     )
@@ -63,23 +81,23 @@ export type ProfileDataType = {
 
 const ProfileData = ({profile, isOwner, goToEditMode}: ProfileDataType) => {
     return <div>
-        {isOwner && <div>
-            <button onClick={goToEditMode}>Edit</button>
-        </div>}
-        <div>
-            <b>Full name</b>:{profile.fullName}
+        <div className={s.profileData}>
+            <b>Full name</b>: <span>{profile.fullName}</span>
         </div>
-        <div>
-            <b>Looking for a job</b>:{profile.lookingForAJob ? 'Yes' : 'No'}
+        <div className={s.profileData}>
+            <b>Looking for a job</b>: <span>{profile.lookingForAJob ? 'Yes' : 'No'}</span>
         </div>
         {profile.lookingForAJob &&
-            <div>
-                <b>My professional skills</b>:{profile.lookingForAJobDescription}
+            <div className={s.profileData}>
+                <b>My professional skills</b>: <span>{profile.lookingForAJobDescription}</span>
             </div>
         }
-        <div>
-            <b>About me</b>:{profile.aboutMe}
+        <div className={s.profileData}>
+            <b>About me</b>: <span>{profile.aboutMe}</span>
         </div>
+        {isOwner && <div className={s.buttonEdit}>
+            <AppButton title={'Edit'} clickCallback={goToEditMode}/>
+        </div>}
     </div>
 }
 

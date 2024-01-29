@@ -1,4 +1,6 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
+import writeStatus from '../../../assets/images/writestatus.png'
+import s from './ProfileStatusWithHooks.module.css'
 
 type ProfileStatusType = {
     status: string
@@ -11,9 +13,9 @@ const ProfileStatusWithHooks = (props: ProfileStatusType) => {
     let [editMode, setEditMode] = useState(false);
     let [status, setStatus] = useState(props.status);
 
-    useEffect(()=>{
+    useEffect(() => {
         setStatus(props.status)
-    },[props.status ])
+    }, [props.status])
 
     const activateEditMode = () => {
         setEditMode(true)
@@ -32,7 +34,9 @@ const ProfileStatusWithHooks = (props: ProfileStatusType) => {
         <div>
             {!editMode &&
                 <div>
-                   <b>Status:</b> <span onDoubleClick={activateEditMode}>{props.status || '--------'}</span>
+                    <b>Status:</b> <span onDoubleClick={activateEditMode}>{props.status ||
+                    <span className={s.noStatus}>Write your status <img src={writeStatus}
+                                                                        alt={'write status'}/></span>}</span>
                 </div>
             }
             {editMode &&
@@ -40,7 +44,8 @@ const ProfileStatusWithHooks = (props: ProfileStatusType) => {
                     <input onChange={onStatusChange}
                            autoFocus={true}
                            onBlur={deactivateEditMode}
-                           value={status}/>
+                           value={status}
+                           placeholder={'Write status'}/>
                 </div>
             }
         </div>

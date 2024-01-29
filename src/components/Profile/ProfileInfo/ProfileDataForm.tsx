@@ -2,6 +2,9 @@ import React from "react";
 import {createField, Input, Textarea} from "../../common/FormsControls/FormsControls";
 import {InjectedFormProps, reduxForm} from "redux-form";
 import style from "../../common/FormsControls/FormsControls.module.css";
+import s from "./ProfileDataForm.module.css";
+import {Abc} from "@mui/icons-material";
+import AppButton from "../../common/Button/AppButton";
 
 export type ProfileFormDataType = {
     fullName: string
@@ -13,24 +16,25 @@ export type ProfileFormDataType = {
 const ProfileDataForm: React.FC<InjectedFormProps<ProfileFormDataType>> = ({handleSubmit,error}) => {
     return <form onSubmit={handleSubmit}>
         <div>
-            <button>Save</button>
             {error && <div className={style.formSummaryError}>
                 {error}
             </div>}
         </div>
-        <div>
-            <b>Full name</b>:{createField("Full name", 'fullName', [], Input)}
+        <div className={s.profileEditData}>
+            <b className={s.filterName}>Full name</b>: <>{createField("Full name", 'fullName', [], Input)}</>
         </div>
-        <div>
-            <b>Looking for a job</b>:{createField("", 'lookingForAJob', [], Input, {type: 'checkbox'})}
+        <div className={s.profileEditData}>
+            <b>Looking for a job</b>:<span className={s.checkboxItem}>{createField("", 'lookingForAJob', [], Input, {type: 'checkbox'})}</span>
         </div>
-        <div>
+        <div className={s.profileEditData}>
             <b>My professional
                 skills</b>:{createField("My professional skills", 'lookingForAJobDescription', [], Textarea)}
         </div>
-        <div>
+        <div className={s.profileEditData}>
             <b>About me</b>:{createField("About me", 'aboutMe', [], Textarea)}
         </div>
+        <div className={s.buttonSave}></div>
+        <AppButton title={'Save'}/>
     </form>
 }
 

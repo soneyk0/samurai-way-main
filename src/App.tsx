@@ -13,6 +13,7 @@ import {initializeAppTC} from "./redux/app-reducer";
 import store, {AppRootStateType} from "./redux/redux-store";
 import Preloader from "./components/common/Preloader/Preloader";
 import {compose} from "redux";
+import error404 from './assets/images/error404.jpg'
 
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
@@ -40,27 +41,30 @@ class App extends React.Component <AppType> {
         return (
             <div className='app-wrapper'>
                 <HeaderContainer/>
-                <Navbar/>
                 <div className={'app-wrapper-content'}>
-                    <Switch>
-                        <Redirect exact from="/" to="/profile"/>
-                        <Route path='/dialogs' render={() => {
-                            return <Suspense fallback={<Preloader/>}>
-                                <DialogsContainer/>
-                            </Suspense>
-                        }}/>
-                        <Route path='/profile/:userId?' render={() => {
-                            return <Suspense fallback={<Preloader/>}>
-                                <ProfileContainer/>
-                            </Suspense>
-                        }}/>
-                        <Route path='/news' render={() => <News/>}/>
-                        <Route path='/music' render={() => <Music/>}/>
-                        <Route path='/settings' render={() => <Settings/>}/>
-                        <Route path='/users' render={() => <UsersContainer/>}/>
-                        <Route path='/login' render={() => <Login/>}/>
-                        <Route path='/*' render={() => <div>404 NOT FOUND</div>}/>
-                    </Switch>
+                    <Navbar/>
+                    <div className={'page-wrap'}>
+                        <Switch>
+                            <Redirect exact from="/" to="/profile"/>
+                            <Route path='/dialogs' render={() => {
+                                return <Suspense fallback={<Preloader/>}>
+                                    <DialogsContainer/>
+                                </Suspense>
+                            }}/>
+                            <Route path='/profile/:userId?' render={() => {
+                                return <Suspense fallback={<Preloader/>}>
+                                    <ProfileContainer/>
+                                </Suspense>
+                            }}/>
+                            <Route path='/news' render={() => <News/>}/>
+                            <Route path='/music' render={() => <Music/>}/>
+                            <Route path='/settings' render={() => <Settings/>}/>
+                            <Route path='/users' render={() => <UsersContainer/>}/>
+                            <Route path='/login' render={() => <Login/>}/>
+                            <Route path='/*'
+                                   render={() => <div><img src={error404} alt={'error 404'} className={'error'}/>
+                                   </div>}/>
+                        </Switch></div>
                 </div>
             </div>
         );

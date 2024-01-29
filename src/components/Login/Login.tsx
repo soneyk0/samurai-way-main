@@ -9,6 +9,7 @@ import {AppRootStateType} from "../../redux/redux-store";
 import style from './../common/FormsControls/FormsControls.module.css'
 import s from './Login.module.css'
 import {Alert} from "@mui/material";
+import AppButton from "../common/Button/AppButton";
 
 
 export type LoginFormData = {
@@ -27,8 +28,9 @@ type LoginType = {
 
 const LoginForm: React.FC<InjectedFormProps<LoginFormData, {captchaUrl: string}> & {captchaUrl: string}> = ({handleSubmit, error,captchaUrl}) => {
     return (
-        <div>
+        <div className={s.form}>
         <form onSubmit={handleSubmit} className={s.formBox}>
+            <h1>Sign up</h1>
             <div className={s.inputItem}>
                 <div>Email</div>
                 {createField('Please enter your email', 'email', [required], Input)}
@@ -47,7 +49,7 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormData, {captchaUrl: string}>
             </div>
 
             <div className={s.buttonLogin}>
-                <button>Login</button>
+                <AppButton title={'Login'}/>
             </div>
         </form>
             {error && <Alert variant="filled" severity="error" className={style.formSummaryError}>
@@ -68,10 +70,7 @@ const Login = (props: LoginType) => {
         return <Redirect to={'/profile'}/>
     }
 
-    return <div>
-        <h1>Login</h1>
-        <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
-    </div>
+    return <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
 }
 
 const mapStateToProps = (state: AppRootStateType) => ({

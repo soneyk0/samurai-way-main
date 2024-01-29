@@ -14,9 +14,49 @@
 }
 
 .descriptionBlock {
+    display: flex;
     padding: 10px;
 }
-.userPhoto{
-    width: 100px;
-    height: 100px;
+
+.userPhoto {
+    width: 250px;
+    height: 250px;
+    box-shadow: 12px 12px 2px 1px #6E1E6C;;
 }
+
+.changeFile {
+    margin-top: 40px;
+    margin-left: 60px;
+    background-color: #440044;
+}
+
+.inputFileButton {
+    display: block;
+    margin-left: 12px;
+    margin-top: 20px;
+}
+
+.profileBlock{
+    padding: 0px 30px;
+}
+.profileData{
+    margin-top: 15px;
+}
+
+
+
+.statusBlock{
+    padding-bottom: 20px;
+}
+
+b{
+    color: black;
+    font-family: Inter;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.buttonEdit{
+    padding-top: 32px;
+}
+

@@ -1,6 +1,6 @@
 import {
     ActionsTypes,
-    AddPostActionType, deletePostType, savePhotoType, setStatusType,
+    AddPostActionType, deletePostType, savePhotoType, SetPostActionType, setStatusType,
     setUserProfileType,
 } from "./store";
 import {Dispatch} from "redux";
@@ -16,11 +16,9 @@ import {stopSubmit} from "redux-form";
 export class PostModel {
     id: string = v1()
     message: string
-    likesCount: number
 
-    constructor(message: string, likesCount: number) {
+    constructor(message: string) {
         this.message = message
-        this.likesCount = likesCount
     }
 }
 
@@ -52,10 +50,7 @@ export class ProfileModel {
 }
 
 export class ProfileReducerState {
-    posts = [
-        new PostModel('hi how are you', 0),
-        new PostModel('Its my first post', 10)
-    ]
+    posts:PostModel[] = []
     profile = new ProfileModel()
     status = ''
 }
@@ -67,8 +62,13 @@ const profileReducer = (state: ProfileReducerState = initialState, action: Actio
         case 'ADD-POST': {
             return {
                 ...state,
-                posts: [...state.posts, new PostModel(action.newPostText, 10)]
+                posts: [...state.posts, new PostModel(action.newPostText)]
 
+            }
+        }
+        case "SET-POSTS":{
+            return {
+                ...state, posts: action.posts
             }
         }
 
@@ -103,6 +103,13 @@ export const addPostActionCreator = (newPostText: string): AddPostActionType => 
     return {
         type: 'ADD-POST',
         newPostText
+    } as const
+}
+
+export const setPostsActionCreator = (posts: PostModel[]): SetPostActionType => {
+    return {
+        type: 'SET-POSTS',
+        posts
     } as const
 }
 

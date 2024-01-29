@@ -28,7 +28,13 @@ let Users = ({currentPage, onPageChanged, totalUsersCount, pageSize, users, ...p
             }
         </div>
         <Stack spacing={2} className={s.paginator}>
-            <Pagination color={"secondary"} count={pagesCount} page={currentPage}  onChange={(event, page)=>onPageChanged(page)} showFirstButton showLastButton />
+            <Pagination color={"secondary"}
+                        count={pagesCount}
+                        page={currentPage}
+                        boundaryCount={2}
+
+                        onChange={(event, page)=>onPageChanged(page)}
+                        showFirstButton showLastButton />
         </Stack>
     </div>
 }

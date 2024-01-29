@@ -1,16 +1,22 @@
+.form{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin-top: 90px;
+}
+
 .formBox {
-    background-color: #F7F7F7;
-    width: 378px;
-    min-height: 456px;
+    background-color:  #ededed;
     height: auto;
+    padding: 25px;
     border-radius: 5px;
-    margin: 2% auto;
-    padding: 2%;
+    width: fit-content;
 }
 
 .formBox .inputItem input {
     display: block;
-    width: 352px;
+    align-items: center;
+    width: 300px;
     height: 30px;
     padding: .5rem .8rem .5rem .8rem;
     margin: .9vw 0;
@@ -22,7 +28,7 @@
 
 .formBox .captchaItem input {
     display: block;
-    width: 175px;
+    width: 200px;
     height: 10px;
     padding: .5rem .8rem .5rem .8rem;
     margin: .9vw 0;
@@ -45,27 +51,9 @@
     margin-left: 45px;
     margin-bottom: -22px;
 }
-
-.formBox .buttonLogin button{
-    text-decoration: none;
-    width: 87px;
-    height: 38px;
-    border: 1px white solid;
-    border-radius: 5px;
-    background: #6E1E6C;
-    color: white;
-    padding: 8px 23px;
-    font-size: 16px;
-    margin-top: 50px;
-    margin-left: 147px;
+.buttonLogin{
+    margin-top: 30px;
+    margin-left: 100px;
 }
 
-.formBox .buttonLogin button:hover {
-    background: #BF1891;
-}
-
-.formBox .buttonLogin button:focus {
-    background-color: #E5CFDF;
-    color:#6E1E6C;
-}
 
